@@ -1,4 +1,5 @@
 <?php
+
 namespace Omnipay\Braintree\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
@@ -6,7 +7,6 @@ use Omnipay\Common\Message\ResponseInterface;
 
 /**
  * Authorize Request
- *
  * @method Response send()
  */
 class AuthorizeRequest extends AbstractRequest
@@ -16,22 +16,23 @@ class AuthorizeRequest extends AbstractRequest
         $this->validate('amount');
 
         $data = array(
-            'amount' => $this->getAmount(),
-            'billingAddressId' => $this->getBillingAddressId(),
-            'channel' => $this->getChannel(),
-            'customFields' => $this->getCustomFields(),
-            'customerId' => $this->getCustomerId(),
-            'descriptor' => $this->getDescriptor(),
-            'deviceData' => $this->getDeviceData(),
-            'deviceSessionId' => $this->getDeviceSessionId(),
-            'merchantAccountId' => $this->getMerchantAccountId(),
-            'orderId' => $this->getTransactionId(),
+            'amount'              => $this->getAmount(),
+            'billingAddressId'    => $this->getBillingAddressId(),
+            'channel'             => $this->getChannel(),
+            'customFields'        => $this->getCustomFields(),
+            'customerId'          => $this->getCustomerId(),
+            'descriptor'          => $this->getDescriptor(),
+            'description'         => $this->getDescription(),
+            'deviceData'          => $this->getDeviceData(),
+            'deviceSessionId'     => $this->getDeviceSessionId(),
+            'merchantAccountId'   => $this->getMerchantAccountId(),
+            'orderId'             => $this->getTransactionId(),
             'purchaseOrderNumber' => $this->getPurchaseOrderNumber(),
-            'recurring' => $this->getRecurring(),
-            'serviceFeeAmount' => $this->getServiceFeeAmount(),
-            'shippingAddressId' => $this->getShippingAddressId(),
-            'taxAmount' => $this->getTaxAmount(),
-            'taxExempt' => $this->getTaxExempt(),
+            'recurring'           => $this->getRecurring(),
+            'serviceFeeAmount'    => $this->getServiceFeeAmount(),
+            'shippingAddressId'   => $this->getShippingAddressId(),
+            'taxAmount'           => $this->getTaxAmount(),
+            'taxExempt'           => $this->getTaxExempt(),
         );
 
         // special validation
@@ -46,8 +47,8 @@ class AuthorizeRequest extends AbstractRequest
         }
 
         // Remove null values
-        $data = array_filter($data, function($value){
-            return ! is_null($value);
+        $data = array_filter($data, function ($value) {
+            return !is_null($value);
         });
 
         if ($this->getCardholderName()) {
@@ -66,7 +67,8 @@ class AuthorizeRequest extends AbstractRequest
     /**
      * Send the request with specified data
      *
-     * @param  mixed $data The data to send
+     * @param mixed $data The data to send
+     *
      * @return ResponseInterface
      */
     public function sendData($data)
@@ -82,12 +84,14 @@ class AuthorizeRequest extends AbstractRequest
      * See: https://developers.braintreepayments.com/reference/request/transaction/sale/php#credit_card.cardholder_name
      *
      * @param $value
+     *
      * @return mixed
      */
     public function setCardholderName($value)
     {
         $cardholderName = trim($value);
-        $cardholderName = strlen($cardholderName)>0 ? $cardholderName : null;
+        $cardholderName = strlen($cardholderName) > 0 ? $cardholderName : null;
+
         return $this->setParameter('cardholderName', $cardholderName);
     }
 

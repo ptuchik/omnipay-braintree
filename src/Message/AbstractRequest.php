@@ -10,7 +10,6 @@ use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
 /**
  * Abstract Request
- *
  */
 abstract class AbstractRequest extends BaseAbstractRequest
 {
@@ -22,9 +21,9 @@ abstract class AbstractRequest extends BaseAbstractRequest
     /**
      * Create a new Request
      *
-     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
-     * @param HttpRequest     $httpRequest A Symfony HTTP request object
-     * @param Braintree_Gateway $braintree The Braintree Gateway
+     * @param ClientInterface   $httpClient  A Guzzle client to make API calls with
+     * @param HttpRequest       $httpRequest A Symfony HTTP request object
+     * @param Braintree_Gateway $braintree   The Braintree Gateway
      */
     public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest, Braintree_Gateway $braintree)
     {
@@ -35,7 +34,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     /**
      * Set the correct configuration sending
-     *
      * @return \Omnipay\Common\Message\ResponseInterface
      */
     public function send()
@@ -150,6 +148,16 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('descriptor', $value);
     }
 
+    public function getDescription()
+    {
+        return $this->getParameter('description');
+    }
+
+    public function setDescription($value)
+    {
+        return $this->setParameter('description', $value);
+    }
+
     public function getDeviceData()
     {
         return $this->getParameter('deviceData');
@@ -216,10 +224,10 @@ abstract class AbstractRequest extends BaseAbstractRequest
         if ($amount !== null) {
             if (!is_float($amount) &&
                 $this->getCurrencyDecimalPlaces() > 0 &&
-                false === strpos((string)$amount, '.')
+                false === strpos((string) $amount, '.')
             ) {
                 throw new InvalidRequestException(
-                    'Please specify amount as a string or float, ' .
+                    'Please specify amount as a string or float, '.
                     'with decimal places (e.g. \'10.00\' to represent $10.00).'
                 );
             }
@@ -375,27 +383,27 @@ abstract class AbstractRequest extends BaseAbstractRequest
         }
 
         return array(
-            'billing' => array(
-                'company' => $card->getBillingCompany(),
-                'firstName' => $card->getBillingFirstName(),
-                'lastName' => $card->getBillingLastName(),
-                'streetAddress' => $card->getBillingAddress1(),
-                'extendedAddress' =>  $card->getBillingAddress2(),
-                'locality' => $card->getBillingCity(),
-                'postalCode' => $card->getBillingPostcode(),
-                'region' => $card->getBillingState(),
-                'countryName' => $card->getBillingCountry(),
+            'billing'  => array(
+                'company'         => $card->getBillingCompany(),
+                'firstName'       => $card->getBillingFirstName(),
+                'lastName'        => $card->getBillingLastName(),
+                'streetAddress'   => $card->getBillingAddress1(),
+                'extendedAddress' => $card->getBillingAddress2(),
+                'locality'        => $card->getBillingCity(),
+                'postalCode'      => $card->getBillingPostcode(),
+                'region'          => $card->getBillingState(),
+                'countryName'     => $card->getBillingCountry(),
             ),
             'shipping' => array(
-                'company' => $card->getShippingCompany(),
-                'firstName' => $card->getShippingFirstName(),
-                'lastName' => $card->getShippingLastName(),
-                'streetAddress' => $card->getShippingAddress1(),
-                'extendedAddress' =>  $card->getShippingAddress2(),
-                'locality' => $card->getShippingCity(),
-                'postalCode' => $card->getShippingPostcode(),
-                'region' => $card->getShippingState(),
-                'countryName' => $card->getShippingCountry(),
+                'company'         => $card->getShippingCompany(),
+                'firstName'       => $card->getShippingFirstName(),
+                'lastName'        => $card->getShippingLastName(),
+                'streetAddress'   => $card->getShippingAddress1(),
+                'extendedAddress' => $card->getShippingAddress2(),
+                'locality'        => $card->getShippingCity(),
+                'postalCode'      => $card->getShippingPostcode(),
+                'region'          => $card->getShippingState(),
+                'countryName'     => $card->getShippingCountry(),
             )
         );
     }
@@ -418,8 +426,8 @@ abstract class AbstractRequest extends BaseAbstractRequest
         );
 
         // Remove null values
-        $data = array_filter($data, function($value){
-            return ! is_null($value);
+        $data = array_filter($data, function ($value) {
+            return !is_null($value);
         });
 
         if (empty($data)) {
