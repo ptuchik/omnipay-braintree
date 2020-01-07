@@ -22,7 +22,6 @@ class AuthorizeRequest extends AbstractRequest
             'customFields'        => $this->getCustomFields(),
             'customerId'          => $this->getCustomerId(),
             'descriptor'          => $this->getDescriptor(),
-            'description'         => $this->getDescription(),
             'deviceData'          => $this->getDeviceData(),
             'deviceSessionId'     => $this->getDeviceSessionId(),
             'merchantAccountId'   => $this->getMerchantAccountId(),
@@ -60,6 +59,9 @@ class AuthorizeRequest extends AbstractRequest
         $data += $this->getOptionData();
         $data += $this->getCardData();
         $data['options']['submitForSettlement'] = false;
+        if ($this->getDescription()) {
+            $data['options']['paypal']['description'] = $this->getDescription();
+        }
 
         return $data;
     }
